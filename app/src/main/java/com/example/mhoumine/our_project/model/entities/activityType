@@ -1,0 +1,8 @@
+package com.example.mhoumine.our_project.model.entities;
+
+public enum activityType {
+    HOTEL_RESORT,
+    TRIP,
+    ENTERTAINMENT_SHOW,
+    FLIGHT
+}
