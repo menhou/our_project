@@ -1,5 +1,8 @@
 package com.example.mhoumine.our_project.model.backend;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+
 import com.example.mhoumine.our_project.model.entities.activity;
 import com.example.mhoumine.our_project.model.entities.business;
 import com.example.mhoumine.our_project.model.entities.userAccount;
@@ -11,11 +14,11 @@ import java.util.ArrayList;
  */
 
 public interface IDSManager {
-    void addBusiness(business be);
-    void addActivity (activity be);
-    void addUser (userAccount be);
-    ArrayList<business> getBusinessList ();
-    ArrayList<activity> getActivityList ();
-    ArrayList<userAccount> getUserList();
+    void addBusiness(ContentValues be);
+    void addActivity (ContentValues act);
+    void addUser (ContentValues user);
+    Cursor getBusinessList ();
+    Cursor getActivityList ();
+    Cursor getUserList();
     boolean checkActivitiesAdded ();
 }

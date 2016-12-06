@@ -1,6 +1,7 @@
 package com.example.mhoumine.our_project.model.datasource;
 
 import android.content.ContentProvider;
+import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
@@ -26,29 +27,44 @@ public class contentProvide extends ContentProvider {
     public boolean onCreate() {
         return false;
     }
-//    public Cursor query(Uri uri, String[] strings, String s, String[] strings1, String s1)
-//    {
-//        /*
-//         ### The uri.getPath() function returns the path with the preceding "/", if you want to get rid of it you can simply
-//         use the substring function  as shown below.
-//         */
-//        String table = uri.getPath().substring(1);
-//        if (table.equalsIgnoreCase("activities"))
-//        {
-//            try {
-//                return manager.getActivityList();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                return null;
-//            }
-//        }
-//
-//    }
-
+    public Cursor query(Uri uri, String[] strings, String s, String[] strings1, String s1)
+    {
+        /*
+         ### The uri.getPath() function returns the path with the preceding "/", if you want to get rid of it you can simply
+         use the substring function  as shown below.
+         */
+        String table = uri.getPath().substring(1);
+        if (table.equalsIgnoreCase("activities"))
+        {
+            try {
+                return manager.getActivityList();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        return null;
+    }
 
     @Nullable
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+    public String getType(Uri uri) {
         return null;
+    }
+
+    @Override
+    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        return 0;
+    }
+
+    @Nullable
+    @Override
+    public Uri insert(Uri uri, ContentValues values) {
+        return null;
+    }
+
+    @Override
+    public int delete(Uri uri, String selection, String[] selectionArgs) {
+        return 0;
     }
 }

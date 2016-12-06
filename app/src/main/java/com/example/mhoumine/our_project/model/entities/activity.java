@@ -1,7 +1,6 @@
 package com.example.mhoumine.our_project.model.entities;
 
 import java.util.Date;
-
 /**
  * Created by mhoumine on 27/11/2016.
  */

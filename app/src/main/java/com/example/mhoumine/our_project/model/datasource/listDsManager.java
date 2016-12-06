@@ -1,12 +1,17 @@
 package com.example.mhoumine.our_project.model.datasource;
 
+import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
+import android.database.MatrixCursor;
 
 import com.example.mhoumine.our_project.model.backend.IDSManager;
 import com.example.mhoumine.our_project.model.entities.business;
 import com.example.mhoumine.our_project.model.entities.userAccount;
 import com.example.mhoumine.our_project.model.entities.activity;
+import com.example.mhoumine.our_project.model.entities.activityType;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -26,47 +31,81 @@ public class listDsManager implements IDSManager {
     }
 
     public listDsManager(ArrayList<business> businessList, ArrayList<activity> activitiesList, ArrayList<userAccount> userAccountList) {
-
         this.businessList = businessList;
         this.activitiesList = activitiesList;
         this.userAccountList = userAccountList;
     }
 
-    public ArrayList<business> getBusinessList() {
-        return businessList;
+    public Cursor getBusinessList() {
+        String[] columns = new String[]{"id", "name", "country", "city", "street", "phoneNumber", "email", "linkUrl"};
+        MatrixCursor matrix = new MatrixCursor(columns);
+
+        for (business b: businessList){
+            matrix.addRow(new Object[]{b.getId(),b.getName(),b.getCountry(),b.getCity(), b.getStreet(),b.getPhoneNumber(), b.getEmail(), b.getLinkUrl()});
+        }
+        return matrix;
     }
 
     public void setBusinessList(ArrayList<business> businessList) {
         this.businessList = businessList;
     }
 
-    public void addBusiness(business be) {
-        this.businessList.add(be);
+    public void addBusiness(ContentValues be) {
+        this.businessList.add(new business(
+        be.getAsString("id"),
+                be.getAsString("name"),
+                be.getAsString("country"),
+                be.getAsString("city"),
+                be.getAsString("phoneNumber"),
+                be.getAsString("street"),
+                be.getAsString("email"),
+                be.getAsString("linkUrl")));
     }
 
-    public ArrayList<activity> getActivityList() {
-        return activitiesList;
+    public Cursor getActivityList() {
+        String[] columns = new String[]{"activityInfo", "country", "startDate", "endDate", "cost", "description", "id"};
+        MatrixCursor matrix = new MatrixCursor(columns);
+
+        for (activity act: activitiesList){
+            matrix.addRow(new Object[]{ act.getActivityInfo(),act.getCountry(),act.getStartDate(),act.getEndDate(), act.getCost(),act.getDescription(), act.getId()});
+        }
+        return matrix;
     }
 
     public void setActivitiesList(ArrayList<activity> activitiesList) {
         this.activitiesList = activitiesList;
     }
 
-    public void addActivity(activity be) {
-        this.activitiesList.add(be);
-        lastChangedActivity.add(new Date());
+    public void addActivity(ContentValues ac) {
+        this.activitiesList.add(new activity
+                ((activityType) ac.get("activityInfo"),
+                        ac.getAsString("country"),
+                        (Date)ac.get("startDate"),
+                        (Date) ac.get("endDate"),
+                        ac.getAsDouble("cost"),
+                        ac.getAsString("description"),
+                        ac.getAsString("id") ));
     }
 
-    public ArrayList<userAccount> getUserList() {
-        return userAccountList;
+    public Cursor getUserList() {
+        String[] columns = new String[]{"userId", "username", "password"};
+        MatrixCursor matrix = new MatrixCursor(columns);
+
+        for (userAccount user: userAccountList){
+            matrix.addRow(new Object[]{user.getUserId(), user.getUsername(), user.getPassword()});
+        }
+        return matrix;
     }
 
     public void setUserAccountList(ArrayList<userAccount> userAccountList) {
         this.userAccountList = userAccountList;
     }
 
-    public void addUser(userAccount be) {
-        this.userAccountList.add(be);
+    public void addUser(ContentValues user) {
+        this.userAccountList.add(new userAccount(
+                user.getAsInteger("userId"),
+                user.getAsString("username"),
+                user.getAsString("password")));
     }
 
     public boolean checkActivitiesAdded() {

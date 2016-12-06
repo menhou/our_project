@@ -27,7 +27,7 @@ public class ManagerFactory {
                 //instance = new com.yair.bookstore.model.DataSources.DatabaseSqlite(context);
             return instance;
         }
-        else return null;
+        return null;
     }
 
 
