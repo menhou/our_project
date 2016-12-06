@@ -19,9 +19,9 @@ public class contentProvide extends ContentProvider {
     private static IDSManager manager = ManagerFactory.getInstance();
     //sets the uris
     static {
-        sUriMatcher.addURI("com.example.mhoumine.our_project.model.entities", "agencies", 1); //need to make some compatibles
-        sUriMatcher.addURI("com.example.mhoumine.our_project.model.entities", "trips", 2);    //need to make some compatibles
-        sUriMatcher.addURI("com.example.mhoumine.our_project.model.entities", "users", 3);    //need to make some compatibles
+        sUriMatcher.addURI("com.example.mhoumine.our_project.travelagencies", "activities", 1); //need to make some compatibles
+        sUriMatcher.addURI("com.example.mhoumine.our_project.travelagencies", "businesses", 2);    //need to make some compatibles
+        sUriMatcher.addURI("com.example.mhoumine.our_project.travelagencies", "useraccounts", 3);    //need to make some compatibles
     }
     @Override
     public boolean onCreate() {
@@ -43,7 +43,22 @@ public class contentProvide extends ContentProvider {
                 return null;
             }
         }
-        return null;
+        if (table.equalsIgnoreCase("businesses")){
+            try {
+                return manager.getBusinessList();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        if (table.equalsIgnoreCase("useraccounts")){
+            try {
+                return manager.getBusinessList();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
     }
 
     @Nullable
@@ -59,8 +74,36 @@ public class contentProvide extends ContentProvider {
 
     @Nullable
     @Override
-    public Uri insert(Uri uri, ContentValues values) {
-        return null;
+    public Uri insert(Uri uri, ContentValues obj) {
+
+        String table = uri.getPath().substring(1);
+
+        if (table.equalsIgnoreCase("activities")) {
+
+            manager.addActivity(obj);
+
+            return null;
+
+        }
+
+        if(table.equalsIgnoreCase("businesses")){
+
+            manager.addBusiness(obj);
+
+            return null;
+
+        }
+
+        if(table.equalsIgnoreCase("useraccounts")){
+
+            manager.addUser(obj);
+
+            return null;
+
+        }
+
+        throw new IllegalArgumentException("This Content Provider supports only activities insertion");
+
     }
 
     @Override
