@@ -59,6 +59,7 @@ public class contentProvide extends ContentProvider {
                 return null;
             }
         }
+        return null;
     }
 
     @Nullable
