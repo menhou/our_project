@@ -37,7 +37,7 @@ public class listDsManager implements IDSManager {
     }
 
     public Cursor getBusinessList() {
-        String[] columns = new String[]{"id", "name", "country", "city", "street", "phoneNumber", "email", "linkUrl"};
+        String[] columns = new String[]{"id", "name", "country","city","phoneNumber" , "street", "email", "linkUrl"};
         MatrixCursor matrix = new MatrixCursor(columns);
 
         for (business b: businessList){
