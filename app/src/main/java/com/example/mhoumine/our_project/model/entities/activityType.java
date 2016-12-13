@@ -5,8 +5,41 @@ package com.example.mhoumine.our_project.model.entities;
  */
 
 public enum activityType {
-    HOTEL_RESORT,
-    TRIP,
-    ENTERTAINMENT_SHOW,
-    FLIGHT
+    HOTEL_RESORT("Hotel Resort"),
+    TRIP("Trip"),
+    ENTERTAINMENT_SHOW("Entertainment Show"),
+    FLIGHT("Flight");
+
+    private final String name;
+
+    private activityType(String s) {
+        name = s;
+    }
+
+
+    public boolean equalsName(String otherName) {
+        return (otherName == null) ? false : name.equals(otherName);
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
+    public static activityType getEnum(String code) {
+
+        switch (code) {
+            case "Hotel Resort":
+                return activityType.HOTEL_RESORT;
+            case "Trip":
+                return activityType.TRIP;
+            case "Entertainment Show":
+                return activityType.ENTERTAINMENT_SHOW;
+            case "Flight":
+                return activityType.FLIGHT;
+            default:
+                return null;
+        }
+    }
 }
+

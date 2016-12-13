@@ -7,13 +7,19 @@ import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import com.example.mhoumine.our_project.model.backend.IDSManager;
 import com.example.mhoumine.our_project.model.entities.business;
 import com.example.mhoumine.our_project.model.entities.userAccount;
 import com.example.mhoumine.our_project.model.entities.activity;
 import com.example.mhoumine.our_project.model.entities.activityType;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.ArrayList;
 
@@ -78,10 +84,10 @@ public class listDsManager implements IDSManager {
 
     public void addActivity(ContentValues ac) {
         this.activitiesList.add(new activity
-                ((activityType) ac.get("activityInfo"),
+                ( activityType.getEnum(ac.getAsString("activityInfo").toString()) ,
                         ac.getAsString("country"),
-                        (Date)ac.get("startDate"),
-                        (Date) ac.get("endDate"),
+                        convertStringToDate(ac.getAsString("startString")),
+                        convertStringToDate(ac.getAsString("endString")),
                         ac.getAsDouble("cost"),
                         ac.getAsString("description"),
                         ac.getAsString("id") ));
@@ -120,5 +126,20 @@ public class listDsManager implements IDSManager {
     private static long getDateDiff(Date date_1, Date date_2, TimeUnit timeunit) {
         long diffInMillies = date_2.getTime() - date_1.getTime();
         return timeunit.convert(diffInMillies, TimeUnit.MILLISECONDS);
+    }
+
+    private Date convertStringToDate(String s){
+        DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+        try {
+            Date date = format.parse(s);
+            return date;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    private String convertDateToString(Date d){
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        return df.format(d);
     }
 }
