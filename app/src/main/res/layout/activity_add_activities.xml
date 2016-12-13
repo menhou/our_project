@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/editText"
+            android:id="@+id/countryEditText"
             android:background="@android:drawable/editbox_background"
             android:layout_weight="0.04" />
 
@@ -70,8 +70,9 @@
             android:layout_height="wrap_content"
             android:inputType="date"
             android:ems="10"
-            android:id="@+id/editText6"
-            android:background="@android:drawable/editbox_background" />
+            android:id="@+id/StartDateEditText"
+            android:background="@android:drawable/editbox_background"
+            android:drawableRight="@android:drawable/ic_menu_my_calendar" />
 
         <TextView
             android:text="End Date:"
@@ -88,8 +89,9 @@
             android:layout_height="wrap_content"
             android:inputType="date"
             android:ems="10"
-            android:id="@+id/editText7"
-            android:background="@android:drawable/editbox_background" />
+            android:id="@+id/EndDateEditText"
+            android:background="@android:drawable/editbox_background"
+            android:drawableRight="@android:drawable/ic_menu_my_calendar" />
 
         <TableRow
             android:layout_width="match_parent"
@@ -110,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:ems="10"
-                android:id="@+id/editText8"
+                android:id="@+id/CostEditText"
                 android:background="@android:drawable/editbox_background" />
 
         </TableRow>
@@ -129,7 +131,7 @@
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:ems="10"
-            android:id="@+id/editText9"
+            android:id="@+id/DescriptionEditText"
             android:layout_weight="0.43"
             android:background="@android:drawable/editbox_background" />
 
