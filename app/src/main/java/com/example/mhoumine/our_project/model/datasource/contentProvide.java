@@ -51,14 +51,6 @@ public class contentProvide extends ContentProvider {
                 return null;
             }
         }
-        if (table.equalsIgnoreCase("useraccounts")){
-            try {
-                return manager.getBusinessList();
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
         return null;
     }
 

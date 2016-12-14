@@ -43,11 +43,11 @@ public class listDsManager implements IDSManager {
     }
 
     public Cursor getBusinessList() {
-        String[] columns = new String[]{"id", "name", "country","city","phoneNumber" , "street", "email", "linkUrl"};
+        String[] columns = new String[]{"id", "name", "country", "city", "phoneNumber", "street", "email", "linkUrl"};
         MatrixCursor matrix = new MatrixCursor(columns);
 
-        for (business b: businessList){
-            matrix.addRow(new Object[]{b.getId(),b.getName(),b.getCountry(),b.getCity(), b.getStreet(),b.getPhoneNumber(), b.getEmail(), b.getLinkUrl()});
+        for (business b : businessList) {
+            matrix.addRow(new Object[]{b.getId(), b.getName(), b.getCountry(), b.getCity(), b.getStreet(), b.getPhoneNumber(), b.getEmail(), b.getLinkUrl()});
         }
         return matrix;
     }
@@ -58,7 +58,7 @@ public class listDsManager implements IDSManager {
 
     public void addBusiness(ContentValues be) {
         this.businessList.add(new business(
-        be.getAsString("id"),
+                be.getAsString("id"),
                 be.getAsString("name"),
                 be.getAsString("country"),
                 be.getAsString("city"),
@@ -72,8 +72,8 @@ public class listDsManager implements IDSManager {
         String[] columns = new String[]{"activityInfo", "country", "startDate", "endDate", "cost", "description", "id"};
         MatrixCursor matrix = new MatrixCursor(columns);
 
-        for (activity act: activitiesList){
-            matrix.addRow(new Object[]{ act.getActivityInfo(),act.getCountry(),act.getStartDate(),act.getEndDate(), act.getCost(),act.getDescription(), act.getId()});
+        for (activity act : activitiesList) {
+            matrix.addRow(new Object[]{act.getActivityInfo(), act.getCountry(), act.getStartDate(), act.getEndDate(), act.getCost(), act.getDescription(), act.getId()});
         }
         return matrix;
     }
@@ -83,24 +83,26 @@ public class listDsManager implements IDSManager {
     }
 
     public void addActivity(ContentValues ac) {
-        this.activitiesList.add(new activity
-                ( activityType.getEnum(ac.getAsString("activityInfo").toString()) ,
-                        ac.getAsString("country"),
-                        convertStringToDate(ac.getAsString("startString")),
-                        convertStringToDate(ac.getAsString("endString")),
-                        ac.getAsDouble("cost"),
-                        ac.getAsString("description"),
-                        ac.getAsString("id") ));
+        activityType activityInfo = (activityType) ac.get("activityInfo");
+        String country = (String) ac.get("country");
+        Date startDate = (Date) ac.get("startString");
+        Date endDate = (Date) ac.get("endString");
+        Double cost = (Double) ac.get("cost");
+        String description = (String) ac.get("description");
+        String id = (String) ac.get("id");
+
+
+        this.activitiesList.add(new activity(activityInfo,country,startDate,endDate,cost,description, id));
     }
 
     public Cursor getUserList() {
         String[] columns = new String[]{"userId", "username", "password"};
         MatrixCursor matrix = new MatrixCursor(columns);
 
-        for (userAccount user: userAccountList){
+        for (userAccount user : userAccountList) {
             matrix.addRow(new Object[]{user.getUserId(), user.getUsername(), user.getPassword()});
         }
-        return matrix;
+        return matrix; // maybe the problem!!!!
     }
 
     public void setUserAccountList(ArrayList<userAccount> userAccountList) {
@@ -108,10 +110,11 @@ public class listDsManager implements IDSManager {
     }
 
     public void addUser(ContentValues user) {
-        this.userAccountList.add(new userAccount(
-                user.getAsInteger("userId"),
-                user.getAsString("username"),
-                user.getAsString("password")));
+        int id = (int) user.get("userId");
+        String username = (String) user.get("username");
+        String password = (String) user.get("password");
+
+        this.userAccountList.add(new userAccount(id,username,password));
     }
 
     public boolean checkActivitiesAdded() {
@@ -128,7 +131,7 @@ public class listDsManager implements IDSManager {
         return timeunit.convert(diffInMillies, TimeUnit.MILLISECONDS);
     }
 
-    private Date convertStringToDate(String s){
+    private Date convertStringToDate(String s) {
         DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
         try {
             Date date = format.parse(s);
@@ -138,7 +141,8 @@ public class listDsManager implements IDSManager {
         }
         return null;
     }
-    private String convertDateToString(Date d){
+
+    private String convertDateToString(Date d) {
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         return df.format(d);
     }
