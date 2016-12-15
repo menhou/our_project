@@ -19,9 +19,9 @@ public class contentProvide extends ContentProvider {
     private static IDSManager manager = ManagerFactory.getInstance();
     //sets the uris
     static {
-        sUriMatcher.addURI("com.example.mhoumine.our_project.travelagencies", "activities", 1); //need to make some compatibles
-        sUriMatcher.addURI("com.example.mhoumine.our_project.travelagencies", "businesses", 2);    //need to make some compatibles
-        sUriMatcher.addURI("com.example.mhoumine.our_project.travelagencies", "useraccounts", 3);    //need to make some compatibles
+        sUriMatcher.addURI(Contract.AUTHORITY, Contract.ACTIVITY, 1); //need to make some compatibles
+        sUriMatcher.addURI(Contract.AUTHORITY, Contract.BUSINESS, 2);    //need to make some compatibles
+        sUriMatcher.addURI(Contract.AUTHORITY, Contract.USER_ACCOUNT, 3);    //need to make some compatibles
     }
     @Override
     public boolean onCreate() {
@@ -34,7 +34,7 @@ public class contentProvide extends ContentProvider {
          use the substring function  as shown below.
          */
         String table = uri.getPath().substring(1);
-        if (table.equalsIgnoreCase("activities"))
+        if (table.equalsIgnoreCase(Contract.ACTIVITY))
         {
             try {
                 return manager.getActivityList();
@@ -43,7 +43,7 @@ public class contentProvide extends ContentProvider {
                 return null;
             }
         }
-        if (table.equalsIgnoreCase("businesses")){
+        if (table.equalsIgnoreCase(Contract.BUSINESS)){
             try {
                 return manager.getBusinessList();
             } catch (Exception e) {
@@ -71,7 +71,7 @@ public class contentProvide extends ContentProvider {
 
         String table = uri.getPath().substring(1);
 
-        if (table.equalsIgnoreCase("activities")) {
+        if (table.equalsIgnoreCase(Contract.ACTIVITY)) {
 
             manager.addActivity(obj);
 
@@ -79,7 +79,7 @@ public class contentProvide extends ContentProvider {
 
         }
 
-        if(table.equalsIgnoreCase("businesses")){
+        if(table.equalsIgnoreCase(Contract.BUSINESS)){
 
             manager.addBusiness(obj);
 
@@ -87,7 +87,7 @@ public class contentProvide extends ContentProvider {
 
         }
 
-        if(table.equalsIgnoreCase("useraccounts")){
+        if(table.equalsIgnoreCase(Contract.USER_ACCOUNT)){
 
             manager.addUser(obj);
 
