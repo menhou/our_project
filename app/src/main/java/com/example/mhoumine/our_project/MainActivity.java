@@ -1,6 +1,7 @@
 package com.example.mhoumine.our_project;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.media.tv.TvContentRating;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.mhoumine.our_project.model.datasource.Contract;
 import com.example.mhoumine.our_project.model.entities.activity;
 import com.example.mhoumine.our_project.model.entities.activityType;
 import com.example.mhoumine.our_project.model.entities.business;
@@ -32,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                click(v);
+                click();
             }
         });
     }
@@ -52,54 +54,35 @@ public class MainActivity extends AppCompatActivity {
         return df.format(d);
     }
 
-    private void click(View v){
-        CustomAsyncTask c = new CustomAsyncTask();
-        c.execute();
+    public void click(){
+       new CustomAsyncTask().execute();
     }
 
-    private class CustomAsyncTask extends AsyncTask<String, Integer, Integer> {
+    public class CustomAsyncTask extends AsyncTask<Void, Void, ArrayList<userAccount>> {
 
-        final ContentValues content = new ContentValues();
         @Override
-        protected Integer doInBackground(String... params) {
-//            MainActivity.this.getContentResolver().insert(Uri.parse("content://com.example.mhoumine.our_project.travelagencies/activities"), content);
-//            Cursor mCursor = MainActivity.this.getContentResolver().query(Uri.parse("content://com.example.mhoumine.our_project.travelagencies/activities"), null, null, null, null);
-//            ArrayList<activity> list = new ArrayList<activity>();
-//            for(mCursor.moveToFirst(); !mCursor.isAfterLast(); mCursor.moveToNext()){
-//                list.add(new activity(activityType.getEnum(mCursor.getString(mCursor.getColumnIndex("activityInfo"))),mCursor.getString(mCursor.getColumnIndex("Country")), convertStringToDate(mCursor.getString(mCursor.getColumnIndex("startDate"))),convertStringToDate(mCursor.getString(mCursor.getColumnIndex("endDate"))),mCursor.getDouble(mCursor.getColumnIndex("cost")),mCursor.getString(mCursor.getColumnIndex("description")), mCursor.getString(mCursor.getColumnIndex("id"))) );
-//            }
-//            return list.get(0).getId();
-            getContentResolver().insert(Uri.parse("content://com.example.mhoumine.our_project.travelagencies/useraccounts"), content);
-            Cursor mCursor = getContentResolver().query(Uri.parse("content://com.example.mhoumine.our_project.travelagencies/useraccounts"), null, null, null, null);
-            ArrayList<userAccount> list = new ArrayList<userAccount>();
-            for(mCursor.moveToFirst(); !mCursor.isAfterLast(); mCursor.moveToNext()){
-                list.add(new userAccount(mCursor.getInt(mCursor.getColumnIndex("userId")), mCursor.getString(mCursor.getColumnIndex("username")), mCursor.getString(mCursor.getColumnIndex("password"))));
-            }
-            return list.get(0).getUserId();
+        protected ArrayList<userAccount> doInBackground(Void... params) {
+            ContentValues content = Contract.UserAccountAdjust.createContentValues(45263,"gal","katz");
+            getContentResolver().insert(Contract.UserAccountAdjust.CONTENT_URI, content);
+
+            Cursor c = getContentResolver().query(Contract.UserAccountAdjust.CONTENT_URI, null, null, null, null);
+            ArrayList<userAccount> list = Contract.UserAccountAdjust.cursorToList(c);
+
+            return list;
         }
 
         @Override
         protected void onPreExecute() {
-//            content.put("activityInfo", activityType.FLIGHT.toString() );
-//            content.put("country","Israel");
-//            content.put("startDate",new Date().toString());
-//            content.put("endDate",new Date().toString());
-//            double num = 13000;
-//            content.put("cost", Double.toString(num));
-//            content.put("description","blabla");
-//            content.put("id","35462");
-            content.put("userId", 635472);
-            content.put("username", "hsdhf");
-            content.put("password", "hdgxdvxdv");
+            super.onPreExecute();
         }
 
         @Override
-        protected void onPostExecute(Integer integer) {
-            Toast.makeText(MainActivity.this,integer, Toast.LENGTH_LONG).show();
+        protected void onPostExecute(ArrayList<userAccount> userAccounts) {
+            Toast.makeText(MainActivity.this,userAccounts.get(0).getUserId(), Toast.LENGTH_LONG).show();
         }
 
         @Override
-        protected void onProgressUpdate(Integer... values) {
+        protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
         }
     }

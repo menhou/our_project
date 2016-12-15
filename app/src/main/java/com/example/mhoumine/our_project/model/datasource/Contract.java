@@ -141,7 +141,7 @@ public final class Contract {
         }
     }
 
-    public static final class classUserAccountAdjust implements BaseColumns{
+    public static final class UserAccountAdjust implements BaseColumns{
         public static final Uri CONTENT_URI = BASE_PROVIDER_URI.buildUpon().appendPath(USER_ACCOUNT).build();
 
         public static final String USER_ID_COL = "userId";
