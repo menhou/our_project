@@ -57,15 +57,16 @@ public class listDsManager implements IDSManager {
     }
 
     public void addBusiness(ContentValues be) {
-        this.businessList.add(new business(
-                be.getAsString("id"),
-                be.getAsString("name"),
-                be.getAsString("country"),
-                be.getAsString("city"),
-                be.getAsString("phoneNumber"),
-                be.getAsString("street"),
-                be.getAsString("email"),
-                be.getAsString("linkUrl")));
+        String id = (String) be.get("id");
+        String name = (String) be.get("name");
+        String country = (String) be.get("country");
+        String city = (String) be.get("city");
+        String phoneNumber = (String) be.get("phoneNumber");
+        String street = (String) be.get("street");
+        String email = (String) be.get("email");
+        String linkUrl = (String) be.get("linkUrl");
+
+        this.businessList.add(new business(id,name,country,city,phoneNumber,street,email,linkUrl));
     }
 
     public Cursor getActivityList() {
@@ -129,21 +130,5 @@ public class listDsManager implements IDSManager {
     private static long getDateDiff(Date date_1, Date date_2, TimeUnit timeunit) {
         long diffInMillies = date_2.getTime() - date_1.getTime();
         return timeunit.convert(diffInMillies, TimeUnit.MILLISECONDS);
-    }
-
-    private Date convertStringToDate(String s) {
-        DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
-        try {
-            Date date = format.parse(s);
-            return date;
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    private String convertDateToString(Date d) {
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        return df.format(d);
     }
 }
