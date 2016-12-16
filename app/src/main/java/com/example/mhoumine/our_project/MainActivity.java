@@ -34,41 +34,47 @@ public class MainActivity extends AppCompatActivity {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                click();
+                CustomAsyncTask c= new CustomAsyncTask();
+                c.execute();
             }
         });
     }
 
-    private Date convertStringToDate(String s){
-        DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
-        try {
-            Date date = format.parse(s);
-            return date;
-        } catch (ParseException e) {
-            e.printStackTrace();
+//    private Date convertStringToDate(String s){
+//        DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+//        try {
+//            Date date = format.parse(s);
+//            return date;
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
+//    private String convertDateToString(Date d){
+//        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+//        return df.format(d);
+//    }
+
+
+    private class CustomAsyncTask extends AsyncTask<Void, Void, ArrayList<userAccount>> {
+        public CustomAsyncTask() {
         }
-        return null;
-    }
-    private String convertDateToString(Date d){
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        return df.format(d);
-    }
-
-    public void click(){
-       new CustomAsyncTask().execute();
-    }
-
-    public class CustomAsyncTask extends AsyncTask<Void, Void, ArrayList<userAccount>> {
 
         @Override
         protected ArrayList<userAccount> doInBackground(Void... params) {
             ContentValues content = Contract.UserAccountAdjust.createContentValues(45263,"gal","katz");
-            getContentResolver().insert(Contract.UserAccountAdjust.CONTENT_URI, content);
+            Uri uri = getContentResolver().insert(Contract.UserAccountAdjust.CONTENT_URI, content);
 
             Cursor c = getContentResolver().query(Contract.UserAccountAdjust.CONTENT_URI, null, null, null, null);
-            ArrayList<userAccount> list = Contract.UserAccountAdjust.cursorToList(c);
+            ArrayList<userAccount> list = new ArrayList<>();
+            list = Contract.UserAccountAdjust.cursorToList(c);
 
             return list;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
         }
 
         @Override
@@ -77,13 +83,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<userAccount> userAccounts) {
-            Toast.makeText(MainActivity.this,userAccounts.get(0).getUserId(), Toast.LENGTH_LONG).show();
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
+        protected void onPostExecute(ArrayList<userAccount> list) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("");
+            sb.append(list.get(0).getUserId());
+            String strI = sb.toString();
+            Toast.makeText(getApplicationContext(),strI, Toast.LENGTH_LONG).show();
         }
     }
 

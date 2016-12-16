@@ -34,17 +34,22 @@ public class listDsManager implements IDSManager {
     private ArrayList<Date> lastChangedActivity;
 
     public listDsManager() {
+        businessList = new ArrayList<>();
+        activitiesList = new ArrayList<>();
+        userAccountList = new ArrayList<>();
     }
 
     public listDsManager(ArrayList<business> businessList, ArrayList<activity> activitiesList, ArrayList<userAccount> userAccountList) {
+        businessList = new ArrayList<>();
+        activitiesList = new ArrayList<>();
+        userAccountList = new ArrayList<>();
         this.businessList = businessList;
         this.activitiesList = activitiesList;
         this.userAccountList = userAccountList;
     }
 
     public Cursor getBusinessList() {
-        String[] columns = new String[]{"id", "name", "country", "city", "phoneNumber", "street", "email", "linkUrl"};
-        MatrixCursor matrix = new MatrixCursor(columns);
+        MatrixCursor matrix = new MatrixCursor(Contract.BusinessAdjust.COLS);
 
         for (business b : businessList) {
             matrix.addRow(new Object[]{b.getId(), b.getName(), b.getCountry(), b.getCity(), b.getStreet(), b.getPhoneNumber(), b.getEmail(), b.getLinkUrl()});
@@ -56,22 +61,27 @@ public class listDsManager implements IDSManager {
         this.businessList = businessList;
     }
 
-    public void addBusiness(ContentValues be) {
-        String id = (String) be.get("id");
-        String name = (String) be.get("name");
-        String country = (String) be.get("country");
-        String city = (String) be.get("city");
-        String phoneNumber = (String) be.get("phoneNumber");
-        String street = (String) be.get("street");
-        String email = (String) be.get("email");
-        String linkUrl = (String) be.get("linkUrl");
+    public boolean addBusiness(ContentValues be) {
+        try {
+            String id = (String) be.get("id");
+            String name = (String) be.get("name");
+            String country = (String) be.get("country");
+            String city = (String) be.get("city");
+            String phoneNumber = (String) be.get("phoneNumber");
+            String street = (String) be.get("street");
+            String email = (String) be.get("email");
+            String linkUrl = (String) be.get("linkUrl");
 
-        this.businessList.add(new business(id,name,country,city,phoneNumber,street,email,linkUrl));
+            this.businessList.add(new business(id, name, country, city, phoneNumber, street, email, linkUrl));
+        }
+        catch (Exception e){
+            return false;
+        }
+        return true;
     }
 
     public Cursor getActivityList() {
-        String[] columns = new String[]{"activityInfo", "country", "startDate", "endDate", "cost", "description", "id"};
-        MatrixCursor matrix = new MatrixCursor(columns);
+        MatrixCursor matrix = new MatrixCursor(Contract.ActivityAdjust.COLS);
 
         for (activity act : activitiesList) {
             matrix.addRow(new Object[]{act.getActivityInfo(), act.getCountry(), act.getStartDate(), act.getEndDate(), act.getCost(), act.getDescription(), act.getId()});
@@ -83,22 +93,28 @@ public class listDsManager implements IDSManager {
         this.activitiesList = activitiesList;
     }
 
-    public void addActivity(ContentValues ac) {
-        activityType activityInfo = (activityType) ac.get("activityInfo");
-        String country = (String) ac.get("country");
-        Date startDate = (Date) ac.get("startString");
-        Date endDate = (Date) ac.get("endString");
-        Double cost = (Double) ac.get("cost");
-        String description = (String) ac.get("description");
-        String id = (String) ac.get("id");
+    public boolean addActivity(ContentValues ac) {
+        try {
+            activityType activityInfo = (activityType) ac.get("activityInfo");
+            String country = (String) ac.get("country");
+            Date startDate = (Date) ac.get("startString");
+            Date endDate = (Date) ac.get("endString");
+            Double cost = (Double) ac.get("cost");
+            String description = (String) ac.get("description");
+            String id = (String) ac.get("id");
 
 
-        this.activitiesList.add(new activity(activityInfo,country,startDate,endDate,cost,description, id));
+            this.activitiesList.add(new activity(activityInfo, country, startDate, endDate, cost, description, id));
+        }
+        catch (Exception e){
+            return false;
+        }
+        return true;
     }
 
     public Cursor getUserList() {
-        String[] columns = new String[]{"userId", "username", "password"};
-        MatrixCursor matrix = new MatrixCursor(columns);
+
+        MatrixCursor matrix = new MatrixCursor(Contract.UserAccountAdjust.COLS);
 
         for (userAccount user : userAccountList) {
             matrix.addRow(new Object[]{user.getUserId(), user.getUsername(), user.getPassword()});
@@ -110,12 +126,18 @@ public class listDsManager implements IDSManager {
         this.userAccountList = userAccountList;
     }
 
-    public void addUser(ContentValues user) {
-        int id = (int) user.get("userId");
-        String username = (String) user.get("username");
-        String password = (String) user.get("password");
+    public boolean addUser(ContentValues user) {
+        try {
+            int id = (int) user.get(Contract.UserAccountAdjust.USER_ID_COL);
+            String username = (String) user.get(Contract.UserAccountAdjust.USERNAME_COL);
+            String password = (String) user.get(Contract.UserAccountAdjust.PASSWORD_COL);
 
-        this.userAccountList.add(new userAccount(id,username,password));
+            this.userAccountList.add(new userAccount(id, username, password));
+        }
+        catch (Exception e){
+            return false;
+        }
+        return true;
     }
 
     public boolean checkActivitiesAdded() {

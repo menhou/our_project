@@ -30,13 +30,13 @@
 
         </activity>
 
+        <provider
+            android:name="com.example.mhoumine.our_project.model.datasource.contentProvide"
+            android:authorities="com.example.mhoumine.our_project.contentProvide"
+            android:permission="com.example.mhoumine.our_project.permissions.ACCESS_DATA"
+            android:exported="true">
+        </provider>
     </application>
 
-    <provider
-        android:name="com.example.mhoumine.our_project.model.datasource.contentProvide"
-        android:authorities="com.example.mhoumine.our_project.travelagencies.contentProvide"
-        android:permission="com.example.mhoumine.our_project.travelagencies.permissions.ACCESS_DATA"
-        android:exported="true">
-    </provider>
 
 </manifest>

@@ -21,9 +21,9 @@ import java.util.Date;
 
 public final class Contract {
     private Contract(){}
-    public static final String AUTHORITY = "com.example.mhoumine.our_project.travelagencies.contentProvide";
+    public static final String AUTHORITY = "com.example.mhoumine.our_project.contentProvide";
     public static final Uri BASE_PROVIDER_URI = Uri.parse("content://" + AUTHORITY);
-    public static final String PERMISSIONS = "com.example.mhoumine.our_project.travelagencies.permissions.ACCESS_DATA";
+    public static final String PERMISSIONS = "com.example.mhoumine.our_project.permissions.ACCESS_DATA";
     public static final String BUSINESS = "businesses";
     public static final String ACTIVITY = "activities";
     public static final String USER_ACCOUNT = "useraccounts";

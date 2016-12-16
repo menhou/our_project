@@ -14,9 +14,9 @@ import java.util.ArrayList;
  */
 
 public interface IDSManager {
-    void addBusiness(ContentValues be);
-    void addActivity (ContentValues act);
-    void addUser (ContentValues user);
+    boolean addBusiness(ContentValues be);
+    boolean addActivity (ContentValues act);
+    boolean addUser (ContentValues user);
     Cursor getBusinessList ();
     Cursor getActivityList ();
     Cursor getUserList();

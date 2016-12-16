@@ -3,6 +3,7 @@ package com.example.mhoumine.our_project.model.datasource;
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
+import android.content.ContentUris;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.Nullable;
@@ -29,29 +30,18 @@ public class contentProvide extends ContentProvider {
     }
     public Cursor query(Uri uri, String[] strings, String s, String[] strings1, String s1)
     {
-        /*
-         ### The uri.getPath() function returns the path with the preceding "/", if you want to get rid of it you can simply
-         use the substring function  as shown below.
-         */
-        String table = uri.getPath().substring(1);
-        if (table.equalsIgnoreCase(Contract.ACTIVITY))
-        {
-            try {
+        switch(sUriMatcher.match(uri)) {
+
+            case 1:
                 return manager.getActivityList();
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-        if (table.equalsIgnoreCase(Contract.BUSINESS)){
-            try {
+
+            case 2:
                 return manager.getBusinessList();
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
+            case 3:
+                return manager.getUserList();
+            default:
+                throw new IllegalArgumentException("Unrecognized Query-Table");
         }
-        return null;
     }
 
     @Nullable
@@ -69,33 +59,52 @@ public class contentProvide extends ContentProvider {
     @Override
     public Uri insert(Uri uri, ContentValues obj) {
 
-        String table = uri.getPath().substring(1);
+//        String table = uri.getPath().substring(1);
+//
+//        if (table.equalsIgnoreCase(Contract.ACTIVITY)) {
+//
+//            manager.addActivity(obj);
+//
+//            return null;
+//
+//        }
+//
+//        if(table.equalsIgnoreCase(Contract.BUSINESS)){
+//
+//            manager.addBusiness(obj);
+//
+//            return null;
+//
+//        }
+//
+//        if(table.equalsIgnoreCase(Contract.USER_ACCOUNT)){
+//
+//            manager.addUser(obj);
+//
+//            return null;
+//
+//        }
 
-        if (table.equalsIgnoreCase(Contract.ACTIVITY)) {
+        switch(sUriMatcher.match(uri)) {
+            case 1:
+                if ( manager.addActivity(obj) )
+                    return ContentUris.withAppendedId(Contract.ActivityAdjust.CONTENT_URI, 1);
+                return ContentUris.withAppendedId(Contract.ActivityAdjust.CONTENT_URI, 0);
 
-            manager.addActivity(obj);
+            case 2:
+                if ( manager.addBusiness(obj) )
+                    return ContentUris.withAppendedId(Contract.BusinessAdjust.CONTENT_URI, 1);
+                return ContentUris.withAppendedId(Contract.BusinessAdjust.CONTENT_URI, 0);
 
-            return null;
+            case 3:
+                if ( manager.addUser(obj) )
+                    return ContentUris.withAppendedId(Contract.UserAccountAdjust.CONTENT_URI, 1);
+                return ContentUris.withAppendedId(Contract.UserAccountAdjust.CONTENT_URI, 0);
 
+            default:
+                throw new IllegalArgumentException("Unrecognized Insertion-Table");
         }
 
-        if(table.equalsIgnoreCase(Contract.BUSINESS)){
-
-            manager.addBusiness(obj);
-
-            return null;
-
-        }
-
-        if(table.equalsIgnoreCase(Contract.USER_ACCOUNT)){
-
-            manager.addUser(obj);
-
-            return null;
-
-        }
-
-        throw new IllegalArgumentException("This Content Provider supports only activities insertion");
 
     }
 
