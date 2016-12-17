@@ -59,32 +59,6 @@ public class contentProvide extends ContentProvider {
     @Override
     public Uri insert(Uri uri, ContentValues obj) {
 
-//        String table = uri.getPath().substring(1);
-//
-//        if (table.equalsIgnoreCase(Contract.ACTIVITY)) {
-//
-//            manager.addActivity(obj);
-//
-//            return null;
-//
-//        }
-//
-//        if(table.equalsIgnoreCase(Contract.BUSINESS)){
-//
-//            manager.addBusiness(obj);
-//
-//            return null;
-//
-//        }
-//
-//        if(table.equalsIgnoreCase(Contract.USER_ACCOUNT)){
-//
-//            manager.addUser(obj);
-//
-//            return null;
-//
-//        }
-
         switch(sUriMatcher.match(uri)) {
             case 1:
                 if ( manager.addActivity(obj) )

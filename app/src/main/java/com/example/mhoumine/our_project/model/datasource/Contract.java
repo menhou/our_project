@@ -18,6 +18,7 @@ import com.example.mhoumine.our_project.model.entities.userAccount;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public final class Contract {
     private Contract(){}
@@ -52,32 +53,32 @@ public final class Contract {
 
             do {
 
-                activityType type = activityType.valueOf( c.getString( c.getColumnIndex( TYPE_COL ) ) );
+                activityType type = activityType.getEnum( c.getString( c.getColumnIndex( TYPE_COL ) ) );
                 String country = c.getString( c.getColumnIndex( COUNTRY_COL ) );
 
-                Date start = new Date();
-                start.setTime( c.getLong( c.getColumnIndex( START_DATE_COL ) ) );
+                GregorianCalendar startDate = new GregorianCalendar();
+                startDate.setTimeInMillis( c.getLong( c.getColumnIndex( START_DATE_COL ) ) );
 
-                Date end = new Date();
-                end.setTime( c.getLong( c.getColumnIndex( END_DATE_COL ) )); ;
+                GregorianCalendar endDate = new GregorianCalendar();
+                endDate.setTimeInMillis(c.getLong( c.getColumnIndex( END_DATE_COL ) )); ;
 
                 double price = c.getDouble( c.getColumnIndex( COST_COL ) );
                 String description = c.getString( c.getColumnIndex( DESCRIPTION_COL ) );
                 String id = c.getString( c.getColumnIndex( ID_COL ) );
 
 
-                list.add(new activity(type, country, start, end, price, description, id));
+                list.add(new activity(type, country, startDate, endDate, price, description, id));
             } while (c.moveToNext());
             return list;
         }
 
-        public static ContentValues createContentValues(activityType type, String country, Date start, Date end, double price, String description, String id) {
+        public static ContentValues createContentValues(activityType type, String country, GregorianCalendar startDate, GregorianCalendar endDate, double price, String description, String id) {
             ContentValues content = new ContentValues();
 
             content.put(TYPE_COL, type.toString());
             content.put(COUNTRY_COL, country);
-            content.put(START_DATE_COL, start.getTime());
-            content.put(END_DATE_COL, end.getTime());
+            content.put(START_DATE_COL, startDate.getTimeInMillis());
+            content.put(END_DATE_COL, endDate.getTimeInMillis());
             content.put(COST_COL, price);
             content.put(DESCRIPTION_COL, description);
             content.put(ID_COL, id);

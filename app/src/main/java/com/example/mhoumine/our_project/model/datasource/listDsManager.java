@@ -19,6 +19,7 @@ import com.example.mhoumine.our_project.model.entities.activityType;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.ArrayList;
@@ -84,7 +85,7 @@ public class listDsManager implements IDSManager {
         MatrixCursor matrix = new MatrixCursor(Contract.ActivityAdjust.COLS);
 
         for (activity act : activitiesList) {
-            matrix.addRow(new Object[]{act.getActivityInfo(), act.getCountry(), act.getStartDate(), act.getEndDate(), act.getCost(), act.getDescription(), act.getId()});
+            matrix.addRow(new Object[]{act.getActivityInfo(), act.getCountry(), (Long)act.getStartDate().getTimeInMillis(), (Long)act.getEndDate().getTimeInMillis(), act.getCost(), act.getDescription(), act.getId()});
         }
         return matrix;
     }
@@ -95,10 +96,12 @@ public class listDsManager implements IDSManager {
 
     public boolean addActivity(ContentValues ac) {
         try {
-            activityType activityInfo = (activityType) ac.get("activityInfo");
+            activityType activityInfo = activityType.getEnum((String) ac.get("activityInfo"));
             String country = (String) ac.get("country");
-            Date startDate = (Date) ac.get("startString");
-            Date endDate = (Date) ac.get("endString");
+            GregorianCalendar startDate = new GregorianCalendar();
+            startDate.setTimeInMillis((Long) ac.get(Contract.ActivityAdjust.START_DATE_COL));
+            GregorianCalendar endDate = new GregorianCalendar();
+            endDate.setTimeInMillis((Long) ac.get(Contract.ActivityAdjust.END_DATE_COL));
             Double cost = (Double) ac.get("cost");
             String description = (String) ac.get("description");
             String id = (String) ac.get("id");
@@ -119,7 +122,7 @@ public class listDsManager implements IDSManager {
         for (userAccount user : userAccountList) {
             matrix.addRow(new Object[]{user.getUserId(), user.getUsername(), user.getPassword()});
         }
-        return matrix; // maybe the problem!!!!
+        return matrix;
     }
 
     public void setUserAccountList(ArrayList<userAccount> userAccountList) {
@@ -152,5 +155,20 @@ public class listDsManager implements IDSManager {
     private static long getDateDiff(Date date_1, Date date_2, TimeUnit timeunit) {
         long diffInMillies = date_2.getTime() - date_1.getTime();
         return timeunit.convert(diffInMillies, TimeUnit.MILLISECONDS);
+    }
+
+    private Date convertStringToDate(String s){
+        DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+        try {
+            Date date = format.parse(s);
+            return date;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    private String convertDateToString(Date d){
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        return df.format(d);
     }
 }

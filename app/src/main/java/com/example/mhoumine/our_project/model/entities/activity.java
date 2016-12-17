@@ -1,6 +1,6 @@
 package com.example.mhoumine.our_project.model.entities;
 
-import java.util.Date;
+import java.util.GregorianCalendar;
 /**
  * Created by mhoumine on 27/11/2016.
  */
@@ -8,16 +8,17 @@ import java.util.Date;
 public class activity {
     private activityType activityInfo;
     private String country;
-    private Date startDate;
-    private Date endDate;
+    private GregorianCalendar startDate;
+    private GregorianCalendar endDate;
     private double cost;
     private String description;
     private  String id;
 
     public activity() {
+
     }
 
-    public activity(activityType activityInfo, String country, Date startDate, Date endDate, double cost, String description, String id) {
+    public activity(activityType activityInfo, String country, GregorianCalendar startDate, GregorianCalendar endDate, double cost, String description, String id) {
         this.activityInfo = activityInfo;
         this.country = country;
         this.startDate = startDate;
@@ -27,11 +28,11 @@ public class activity {
         this.id = id;
     }
 
-    public Date getEndDate() {
+    public GregorianCalendar getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(GregorianCalendar endDate) {
         this.endDate = endDate;
     }
 
@@ -51,11 +52,11 @@ public class activity {
         this.country = country;
     }
 
-    public Date getStartDate() {
+    public GregorianCalendar getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(GregorianCalendar startDate) {
         this.startDate = startDate;
     }
 

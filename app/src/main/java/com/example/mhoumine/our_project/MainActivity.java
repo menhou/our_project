@@ -22,6 +22,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,34 +41,22 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-//    private Date convertStringToDate(String s){
-//        DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
-//        try {
-//            Date date = format.parse(s);
-//            return date;
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
-//    private String convertDateToString(Date d){
-//        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-//        return df.format(d);
-//    }
 
-
-    private class CustomAsyncTask extends AsyncTask<Void, Void, ArrayList<userAccount>> {
+    private class CustomAsyncTask extends AsyncTask<Void, Void, ArrayList<business>> {
         public CustomAsyncTask() {
         }
 
         @Override
-        protected ArrayList<userAccount> doInBackground(Void... params) {
-            ContentValues content = Contract.UserAccountAdjust.createContentValues(45263,"gal","katz");
-            Uri uri = getContentResolver().insert(Contract.UserAccountAdjust.CONTENT_URI, content);
+        protected ArrayList<business> doInBackground(Void... params) {
+            GregorianCalendar date1 = new GregorianCalendar(1900, 11, 27);
+            GregorianCalendar date2 = new GregorianCalendar(1990, 6, 15);
 
-            Cursor c = getContentResolver().query(Contract.UserAccountAdjust.CONTENT_URI, null, null, null, null);
-            ArrayList<userAccount> list = new ArrayList<>();
-            list = Contract.UserAccountAdjust.cursorToList(c);
+            ContentValues content = Contract.BusinessAdjust.createContentValues("34234","busi","Israel", "Tel Aviv", "hfsd","324234", "zdfu@gmail.com", "google.co.il");
+            Uri uri = getContentResolver().insert(Contract.BusinessAdjust.CONTENT_URI, content);
+
+            Cursor c = getContentResolver().query(Contract.BusinessAdjust.CONTENT_URI, null, null, null, null);
+            ArrayList<business> list = new ArrayList<>();
+            list = Contract.BusinessAdjust.cursorToList(c);
 
             return list;
         }
@@ -83,12 +72,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<userAccount> list) {
-            StringBuilder sb = new StringBuilder();
-            sb.append("");
-            sb.append(list.get(0).getUserId());
-            String strI = sb.toString();
-            Toast.makeText(getApplicationContext(),strI, Toast.LENGTH_LONG).show();
+        protected void onPostExecute(ArrayList<business> list) {
+//            StringBuilder sb = new StringBuilder();
+//            sb.append("");
+//            sb.append(list.get(0).getStartDate());
+//            String strI = sb.toString();
+//            GregorianCalendar d = list.get(0).getStartDate();
+//            SimpleDateFormat formatter=new SimpleDateFormat("dd/MM/yyyy");
+
+            Toast.makeText(getApplicationContext(),list.get(0).getEmail(), Toast.LENGTH_LONG).show();
         }
     }
 
