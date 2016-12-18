@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:text="Business ID:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/BusinessIDTextView"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="10dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/BusinessIDEditText"
+        android:background="@android:drawable/editbox_background" />
+
+    <TextView
+        android:text="Name:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/NameTextView"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="10dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/NameEditText"
+        android:background="@android:drawable/editbox_background" />
+
+    <TextView
+        android:text="Country:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/CountryTextView"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/CountryEditText"
+        android:background="@android:drawable/editbox_background" />
+
+    <TextView
+        android:text="City:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/CityTextView"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/CityEditText"
+        android:background="@android:drawable/editbox_background" />
+
+    <TextView
+        android:text="Street:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/StreetTextView"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/StreetEditText"
+        android:background="@android:drawable/editbox_background" />
+
+    <TextView
+        android:text="Phone Number:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/PhoneNumTextView"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:ems="10"
+        android:id="@+id/PhoneNumEditText"
+        android:background="@android:drawable/editbox_background" />
+
+    <TextView
+        android:text="Email:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/EmailTextView"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/EmailEditText"
+        android:background="@android:drawable/editbox_background" />
+
+    <TextView
+        android:text="Link:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/LinkTextView"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/LinkEditText"
+        android:background="@android:drawable/editbox_background" />
+
+    <Button
+        android:text="Add Business"
+        android:layout_height="wrap_content"
+        android:id="@+id/AddBusinessButton"
+        android:layout_width="wrap_content" />
+
+</LinearLayout>

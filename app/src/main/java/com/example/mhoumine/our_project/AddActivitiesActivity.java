@@ -194,7 +194,6 @@ public class AddActivitiesActivity extends AppCompatActivity implements OnItemSe
 
         @Override
         protected Void doInBackground(activity... params) {
-            Spinner spinner = (Spinner) findViewById(R.id.typeActivitySpinner);
 
             ContentValues content = Contract.ActivityAdjust.createContentValues(params[0].getActivityInfo(),params[0].getCountry(), params[0].getStartDate(), params[0].getEndDate(),params[0].getCost(), params[0].getDescription(), params[0].getId() );
             Uri uri = getContentResolver().insert(Contract.ActivityAdjust.CONTENT_URI, content);
