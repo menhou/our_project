@@ -47,7 +47,7 @@ public class OptionsActivity extends AppCompatActivity{
                 dialogButton.setOnClickListener(new View.OnClickListener() {
                     EditText idEditText = (EditText) AddBusinessDialog.findViewById(R.id.BusinessIDEditText);
                     EditText nameEditText = (EditText) AddBusinessDialog.findViewById(R.id.NameEditText);
-                    EditText countryEditText = (EditText) AddBusinessDialog.findViewById(R.id.countryEditText);
+                    EditText countryEditText = (EditText) AddBusinessDialog.findViewById(R.id.CountryEditText);
                     EditText cityEditText = (EditText) AddBusinessDialog.findViewById(R.id.CityEditText);
                     EditText streetEditText = (EditText) AddBusinessDialog.findViewById(R.id.StreetEditText);
                     EditText phoneNumEditText = (EditText) AddBusinessDialog.findViewById(R.id.PhoneNumEditText);
@@ -65,9 +65,10 @@ public class OptionsActivity extends AppCompatActivity{
                                 linkEditText.getText().toString()));
                     }
                 });
-                AddBusinessDialog.show();
                 Window window = AddBusinessDialog.getWindow();
                 window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+                AddBusinessDialog.show();
+
             }
         });
 
