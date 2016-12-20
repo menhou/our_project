@@ -32,13 +32,24 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/editText2"
+            android:hint="ID"
+            android:background="@android:drawable/editbox_background"
+            android:layout_weight="0.05"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:hint="Username"
             android:ems="10"
             android:id="@+id/UsernameEditbox"
             tools:background="@android:drawable/editbox_background"
             android:layout_weight="0.05"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="10dp" />
 
         <EditText
             android:layout_width="match_parent"
@@ -50,6 +61,14 @@
             android:background="@android:drawable/editbox_background"
             android:layout_weight="0.06"
             android:layout_marginTop="10dp" />
+
+        <CheckBox
+            android:text="Remember Password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rememberCheckBox"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp" />
 
         <TableRow
             android:layout_width="wrap_content"

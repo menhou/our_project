@@ -145,12 +145,11 @@ public final class Contract {
     public static final class UserAccountAdjust implements BaseColumns{
         public static final Uri CONTENT_URI = BASE_PROVIDER_URI.buildUpon().appendPath(USER_ACCOUNT).build();
 
-        public static final String USER_ID_COL = "userId";
         public static final String USERNAME_COL = "username";
         public static final String PASSWORD_COL = "password";
 
         public static final String[] COLS = {
-                USER_ID_COL, USERNAME_COL,PASSWORD_COL
+                USERNAME_COL,PASSWORD_COL
         };
 
         public static ArrayList<userAccount> cursorToList(Cursor c){
@@ -162,19 +161,17 @@ public final class Contract {
             c.moveToFirst();
 
             do {
-                int userId = c.getInt(c.getColumnIndex(USER_ID_COL));
                 String username = c.getString(c.getColumnIndex(USERNAME_COL));
                 String password = c.getString(c.getColumnIndex(PASSWORD_COL));
 
-                list.add(new userAccount(userId,username,password));
+                list.add(new userAccount(username,password));
             } while (c.moveToNext());
             return list;
         }
 
-        public static ContentValues createContentValues(int userId, String username, String password) {
+        public static ContentValues createContentValues(String username, String password) {
             ContentValues content = new ContentValues();
 
-            content.put(USER_ID_COL, userId);
             content.put(USERNAME_COL, username);
             content.put(PASSWORD_COL, password);
 

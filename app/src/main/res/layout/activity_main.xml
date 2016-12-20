@@ -11,11 +11,21 @@
     tools:context="com.example.mhoumine.our_project.MainActivity">
 
     <Button
-        android:text="Button"
+        android:text="Add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button"
+        android:id="@+id/something"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="13dp" />
+
+    <Button
+        android:text="Load"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/something2"
+        android:layout_below="@+id/something"
+        android:layout_alignLeft="@+id/something"
+        android:layout_alignStart="@+id/something"
+        android:layout_marginTop="14dp" />
 
 </RelativeLayout>

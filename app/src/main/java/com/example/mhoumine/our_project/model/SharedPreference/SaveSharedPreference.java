@@ -17,34 +17,55 @@ import com.example.mhoumine.our_project.LoginActivity;
 //}
 
 public class SaveSharedPreference{
-    public SaveSharedPreference(){
+    private String storedUsername;
+    private String storedPass;
+    private boolean isChecked;
 
+    public SaveSharedPreference(Context context){
+        SharedPreferences prefs = context.getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE);
+        storedUsername = prefs.getString("Username",null);
+        storedPass = prefs.getString("Password", null);
+        isChecked = prefs.getBoolean("isChecked", false);
     }
     public static final String MY_PREFS_NAME = "MyPrefsFile";
-    public void addUsernameAndPass(String user, String pass, Context context)throws Exception{
+    public void addUsernameAndPass(String user, String pass, Context context){
         SharedPreferences.Editor editor = context.getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE).edit();
-        SharedPreferences prefs = context.getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE);
-        String storedUsername = prefs.getString("Username",null);
-        String storedPass = prefs.getString("Password", null);
-        if (storedUsername == null || storedPass == null){
-            editor.putString("Username", user);
-            editor.putString("Password", pass);
-            editor.commit();
-        }
-        else {
-            throw new Exception();
-        }
+        editor.putBoolean("isChecked", true);
+        editor.putString("Username", user);
+        editor.putString("Password", pass);
+        isChecked = true;
+        storedUsername = user;
+        storedPass = pass;
+        editor.commit();
     }
 
-    public String[] getUsernameAndPass(Context context) throws Exception{
-        SharedPreferences prefs = context.getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE);
-        String storedUsername = prefs.getString("Username",null);
-        String storedPass = prefs.getString("Password", null);
-        if(storedUsername == null || storedPass == null){
-            throw new Exception("No Such Username Or Password in the shared");
+    public String getStoredUsername()throws  Exception {
+        if (isChecked && storedUsername != null) {
+            return storedUsername;
         }
-        else{
-            return new String[] {storedUsername, storedPass};
+        throw new Exception("Username doesn't exist");
+    }
+
+    public void setStoredUsername(String storedUsername) {
+        this.storedUsername = storedUsername;
+    }
+
+    public String getStoredPass() throws Exception{
+        if (isChecked && storedPass != null) {
+            return storedPass;
         }
+        throw new Exception("Password doesn't exist");
+    }
+
+    public void setStoredPass(String storedPass) {
+        this.storedPass = storedPass;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 }

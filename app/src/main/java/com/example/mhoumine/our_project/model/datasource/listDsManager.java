@@ -120,7 +120,7 @@ public class listDsManager implements IDSManager {
         MatrixCursor matrix = new MatrixCursor(Contract.UserAccountAdjust.COLS);
 
         for (userAccount user : userAccountList) {
-            matrix.addRow(new Object[]{user.getUserId(), user.getUsername(), user.getPassword()});
+            matrix.addRow(new Object[]{user.getUsername(), user.getPassword()});
         }
         return matrix;
     }
@@ -131,11 +131,10 @@ public class listDsManager implements IDSManager {
 
     public boolean addUser(ContentValues user) {
         try {
-            int id = (int) user.get(Contract.UserAccountAdjust.USER_ID_COL);
             String username = (String) user.get(Contract.UserAccountAdjust.USERNAME_COL);
             String password = (String) user.get(Contract.UserAccountAdjust.PASSWORD_COL);
 
-            this.userAccountList.add(new userAccount(id, username, password));
+            this.userAccountList.add(new userAccount(username, password));
         }
         catch (Exception e){
             return false;

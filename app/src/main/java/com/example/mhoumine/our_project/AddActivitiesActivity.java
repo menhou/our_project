@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.media.tv.TvContentRating;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -197,6 +198,7 @@ public class AddActivitiesActivity extends AppCompatActivity implements OnItemSe
 
             ContentValues content = Contract.ActivityAdjust.createContentValues(params[0].getActivityInfo(),params[0].getCountry(), params[0].getStartDate(), params[0].getEndDate(),params[0].getCost(), params[0].getDescription(), params[0].getId() );
             Uri uri = getContentResolver().insert(Contract.ActivityAdjust.CONTENT_URI, content);
+
             return null;
         }
 
