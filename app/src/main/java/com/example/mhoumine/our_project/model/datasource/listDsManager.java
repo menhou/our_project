@@ -62,7 +62,7 @@ public class listDsManager implements IDSManager {
         this.businessList = businessList;
     }
 
-    public boolean addBusiness(ContentValues be) {
+    public boolean addBusiness(ContentValues be) throws Exception{
         try {
             String id = (String) be.get("id");
             String name = (String) be.get("name");
@@ -73,6 +73,9 @@ public class listDsManager implements IDSManager {
             String email = (String) be.get("email");
             String linkUrl = (String) be.get("linkUrl");
 
+            if (checkIfBusinessExists(id)){
+                throw new Exception("Business already exists");
+            }
             this.businessList.add(new business(id, name, country, city, phoneNumber, street, email, linkUrl));
         }
         catch (Exception e){
@@ -129,10 +132,14 @@ public class listDsManager implements IDSManager {
         this.userAccountList = userAccountList;
     }
 
-    public boolean addUser(ContentValues user) {
+    public boolean addUser(ContentValues user) throws Exception {
         try {
             String username = (String) user.get(Contract.UserAccountAdjust.USERNAME_COL);
             String password = (String) user.get(Contract.UserAccountAdjust.PASSWORD_COL);
+
+            if (checkIfUserExists(username)){
+                throw new Exception("The account already exists");
+            }
 
             this.userAccountList.add(new userAccount(username, password));
         }
@@ -156,18 +163,21 @@ public class listDsManager implements IDSManager {
         return timeunit.convert(diffInMillies, TimeUnit.MILLISECONDS);
     }
 
-    private Date convertStringToDate(String s){
-        DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
-        try {
-            Date date = format.parse(s);
-            return date;
-        } catch (ParseException e) {
-            e.printStackTrace();
+    private boolean checkIfUserExists(String username){
+        for (userAccount user : userAccountList){
+            if (user.getUsername().equals(username)){
+                return true;
+            }
         }
-        return null;
+        return false;
     }
-    private String convertDateToString(Date d){
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        return df.format(d);
+
+    private  boolean checkIfBusinessExists(String ID){
+        for (business busi : businessList){
+            if (busi.getId().equals(ID)){
+                return true;
+            }
+        }
+        return false;
     }
 }
