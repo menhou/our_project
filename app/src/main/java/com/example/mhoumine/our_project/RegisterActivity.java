@@ -24,8 +24,8 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 EditText username = (EditText) findViewById(R.id.UsernameTextbox);
-                EditText password = (EditText) findViewById(R.id.PasswordEdibox);
-                new RegisterAsynctask().execute(new userAccount(1, username.getText().toString(), password.getText().toString()));
+                EditText password = (EditText) findViewById(R.id.PasswordTextbox);
+                new RegisterAsynctask().execute(new userAccount(username.getText().toString(), password.getText().toString()));
             }
         });
     }
@@ -48,7 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(userAccount... params) {
-            ContentValues content = Contract.UserAccountAdjust.createContentValues(params[0].getUserId(),params[0].getUsername(), params[0].getPassword() );
+            ContentValues content = Contract.UserAccountAdjust.createContentValues(params[0].getUsername(), params[0].getPassword() );
             Uri uri = getContentResolver().insert(Contract.UserAccountAdjust.CONTENT_URI, content);
             return null;
         }
