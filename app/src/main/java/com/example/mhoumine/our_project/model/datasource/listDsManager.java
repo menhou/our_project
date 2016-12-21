@@ -49,7 +49,10 @@ public class listDsManager implements IDSManager {
         this.userAccountList = userAccountList;
     }
 
-    public Cursor getBusinessList() {
+    public Cursor getBusinessList(){
+        if (businessList.isEmpty()){
+            return null;
+        }
         MatrixCursor matrix = new MatrixCursor(Contract.BusinessAdjust.COLS);
 
         for (business b : businessList) {
@@ -62,9 +65,12 @@ public class listDsManager implements IDSManager {
         this.businessList = businessList;
     }
 
-    public boolean addBusiness(ContentValues be) throws Exception{
+    public boolean addBusiness(ContentValues be){
         try {
             String id = (String) be.get("id");
+            if (checkIfBusinessExists(id)){
+                return false;
+            }
             String name = (String) be.get("name");
             String country = (String) be.get("country");
             String city = (String) be.get("city");
@@ -73,9 +79,6 @@ public class listDsManager implements IDSManager {
             String email = (String) be.get("email");
             String linkUrl = (String) be.get("linkUrl");
 
-            if (checkIfBusinessExists(id)){
-                throw new Exception("Business already exists");
-            }
             this.businessList.add(new business(id, name, country, city, phoneNumber, street, email, linkUrl));
         }
         catch (Exception e){
@@ -84,7 +87,10 @@ public class listDsManager implements IDSManager {
         return true;
     }
 
-    public Cursor getActivityList() {
+    public Cursor getActivityList(){
+        if (activitiesList.isEmpty()){
+            return null;
+        }
         MatrixCursor matrix = new MatrixCursor(Contract.ActivityAdjust.COLS);
 
         for (activity act : activitiesList) {
@@ -118,8 +124,10 @@ public class listDsManager implements IDSManager {
         return true;
     }
 
-    public Cursor getUserList() {
-
+    public Cursor getUserList(){
+        if (userAccountList.isEmpty()){
+            return null;
+        }
         MatrixCursor matrix = new MatrixCursor(Contract.UserAccountAdjust.COLS);
 
         for (userAccount user : userAccountList) {
@@ -132,13 +140,13 @@ public class listDsManager implements IDSManager {
         this.userAccountList = userAccountList;
     }
 
-    public boolean addUser(ContentValues user) throws Exception {
+    public boolean addUser(ContentValues user) {
         try {
             String username = (String) user.get(Contract.UserAccountAdjust.USERNAME_COL);
             String password = (String) user.get(Contract.UserAccountAdjust.PASSWORD_COL);
 
             if (checkIfUserExists(username)){
-                throw new Exception("The account already exists");
+                return false;
             }
 
             this.userAccountList.add(new userAccount(username, password));
@@ -158,10 +166,6 @@ public class listDsManager implements IDSManager {
         return false;
     }
 
-    private static long getDateDiff(Date date_1, Date date_2, TimeUnit timeunit) {
-        long diffInMillies = date_2.getTime() - date_1.getTime();
-        return timeunit.convert(diffInMillies, TimeUnit.MILLISECONDS);
-    }
 
     private boolean checkIfUserExists(String username){
         for (userAccount user : userAccountList){

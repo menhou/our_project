@@ -21,13 +21,15 @@ public class SaveSharedPreference{
     private String storedPass;
     private boolean isChecked;
 
+    public static final String MY_PREFS_NAME = "MyPrefsFile";
+
     public SaveSharedPreference(Context context){
         SharedPreferences prefs = context.getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE);
         storedUsername = prefs.getString("Username",null);
         storedPass = prefs.getString("Password", null);
         isChecked = prefs.getBoolean("isChecked", false);
     }
-    public static final String MY_PREFS_NAME = "MyPrefsFile";
+
     public void addUsernameAndPass(String user, String pass, Context context){
         SharedPreferences.Editor editor = context.getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE).edit();
         editor.putBoolean("isChecked", true);

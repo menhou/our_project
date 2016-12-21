@@ -30,18 +30,18 @@ public class contentProvide extends ContentProvider {
     }
     public Cursor query(Uri uri, String[] strings, String s, String[] strings1, String s1)
     {
-        switch(sUriMatcher.match(uri)) {
+            switch (sUriMatcher.match(uri)) {
 
-            case 1:
-                return manager.getActivityList();
+                case 1:
+                    return manager.getActivityList();
 
-            case 2:
-                return manager.getBusinessList();
-            case 3:
-                return manager.getUserList();
-            default:
-                throw new IllegalArgumentException("Unrecognized Query-Table");
-        }
+                case 2:
+                    return manager.getBusinessList();
+                case 3:
+                    return manager.getUserList();
+                default:
+                    throw new IllegalArgumentException("Unrecognized Query-Table");
+            }
     }
 
     @Nullable

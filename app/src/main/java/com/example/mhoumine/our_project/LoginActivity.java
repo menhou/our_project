@@ -127,10 +127,6 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (isMatch) {
                     Intent myIntent = new Intent(LoginActivity.this, OptionsActivity.class);
                     LoginActivity.this.startActivity(myIntent);
-                } else if (!isMatch && inShared) {
-                    Intent myIntent = new Intent(LoginActivity.this, OptionsActivity.class);
-                    LoginActivity.this.startActivity(myIntent);
-                    inShared = false;
                 } else {
                     Toast.makeText(getApplicationContext(), "Account Doesn't Exist", Toast.LENGTH_LONG).show();
                 }

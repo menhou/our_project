@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.mhoumine.our_project.model.datasource.Contract;
 import com.example.mhoumine.our_project.model.entities.userAccount;
@@ -30,15 +31,23 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private class RegisterAsynctask extends AsyncTask<userAccount, Void, Void>{
+    private class RegisterAsynctask extends AsyncTask<userAccount, Void, Uri>{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        protected void onPostExecute(Uri uri) {
+            int length = uri.toString().length();
+            String s = uri.toString();
+            if (s.charAt(length-1) == '1'){
+                Toast.makeText(getApplicationContext(),"Account has been created", Toast.LENGTH_LONG).show();
+            }
+            else {
+                Toast.makeText(getApplicationContext(),"The account already exists", Toast.LENGTH_LONG).show();
+
+            }
         }
 
         @Override
@@ -47,10 +56,10 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Void doInBackground(userAccount... params) {
+        protected Uri doInBackground(userAccount... params) {
             ContentValues content = Contract.UserAccountAdjust.createContentValues(params[0].getUsername(), params[0].getPassword() );
             Uri uri = getContentResolver().insert(Contract.UserAccountAdjust.CONTENT_URI, content);
-            return null;
+            return uri;
         }
     }
 

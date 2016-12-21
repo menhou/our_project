@@ -14,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.mhoumine.our_project.model.datasource.Contract;
 import com.example.mhoumine.our_project.model.entities.business;
@@ -76,22 +77,32 @@ public class OptionsActivity extends AppCompatActivity{
     }
 
 
-    private class AddBusinessAsyncTask extends AsyncTask<business,Void,Void>{
+    private class AddBusinessAsyncTask extends AsyncTask<business,Void,Uri>{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        protected void onPostExecute(Uri uri) {
+            int length = uri.toString().length();
+            String s = uri.toString();
+            if (s.charAt(length-1) == '1'){
+                Toast.makeText(getApplicationContext(),"Business has been created", Toast.LENGTH_LONG).show();
+                Intent myIntent = new Intent(OptionsActivity.this, OptionsActivity.class);
+                OptionsActivity.this.startActivity(myIntent);
+            }
+            else {
+                Toast.makeText(getApplicationContext(),"The business already exists", Toast.LENGTH_LONG).show();
+
+            }
         }
 
         @Override
-        protected Void doInBackground(business... params) {
+        protected Uri doInBackground(business... params) {
             ContentValues content = Contract.BusinessAdjust.createContentValues(params[0].getId(), params[0].getName(), params[0].getCountry(), params[0].getCity(), params[0].getStreet(), params[0].getPhoneNumber(), params[0].getEmail(), params[0].getLinkUrl());
             Uri uri = getContentResolver().insert(Contract.BusinessAdjust.CONTENT_URI, content);
-            return null;
+            return uri;
         }
 
         @Override
