@@ -20,5 +20,5 @@ public interface IDSManager {
     Cursor getBusinessList ();
     Cursor getActivityList ();
     Cursor getUserList();
-    boolean checkActivitiesAdded ();
+    Cursor checkActivitiesAdded ();
 }

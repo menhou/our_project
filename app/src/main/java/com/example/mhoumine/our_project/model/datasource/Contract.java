@@ -28,6 +28,7 @@ public final class Contract {
     public static final String BUSINESS = "businesses";
     public static final String ACTIVITY = "activities";
     public static final String USER_ACCOUNT = "useraccounts";
+    public static final String CHECK_UPDATES = "checkUpdates";
 
     public static final class ActivityAdjust implements BaseColumns{
         public static final Uri CONTENT_URI = BASE_PROVIDER_URI.buildUpon().appendPath(ACTIVITY).build();
@@ -179,5 +180,31 @@ public final class Contract {
         }
     }
 
+    public static final class CheckDBUpdate implements BaseColumns{
+        public static final Uri CONTENT_URI = BASE_PROVIDER_URI.buildUpon().appendPath(CHECK_UPDATES).build();
+
+        public static final String BUSINESS_COL = "businesses";
+        public static final String ACTIVITY_COL = "activities";
+        public static final String USER_ACCOUNT_COL = "useraccounts";
+
+        public static final String[] COLS = {
+                ACTIVITY, BUSINESS, USER_ACCOUNT
+        };
+
+        public static boolean isUserAccountUpdated(Cursor cur) {
+            cur.moveToFirst(); // move cursor to start
+            return cur.getInt( cur.getColumnIndex( CheckDBUpdate.USER_ACCOUNT_COL) ) > 0;
+        }
+
+        public static boolean isActivityUpdated(Cursor cur) {
+            cur.moveToFirst(); // move cursor to beggining
+            return cur.getInt( cur.getColumnIndex( CheckDBUpdate.ACTIVITY_COL ) ) > 0;
+        }
+
+        public static boolean isBusinessUpdated(Cursor cur) {
+            cur.moveToFirst(); // move cursor to start
+            return cur.getInt( cur.getColumnIndex( CheckDBUpdate.BUSINESS_COL ) ) > 0;
+        }
+    }
 
 }

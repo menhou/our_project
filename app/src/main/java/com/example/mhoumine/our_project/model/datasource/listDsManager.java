@@ -32,7 +32,9 @@ public class listDsManager implements IDSManager {
     private ArrayList<business> businessList;
     private ArrayList<activity> activitiesList;
     private ArrayList<userAccount> userAccountList;
-    private ArrayList<Date> lastChangedActivity;
+    private boolean isActivitiesUpdated = false;
+    private  boolean isBusinessesUpdated = false;
+    private boolean isUsersUpdated = false;
 
     public listDsManager() {
         businessList = new ArrayList<>();
@@ -157,13 +159,10 @@ public class listDsManager implements IDSManager {
         return true;
     }
 
-    public boolean checkActivitiesAdded() {
-        for (Date d : lastChangedActivity) {
-            if (getDateDiff(d, new Date(), TimeUnit.DAYS) < 30) {
-                return true;
-            }
+    public Cursor checkChanges() {
+        if (isActivitiesUpdated){
+            MatrixCursor matrix = new MatrixCursor(Contract.CheckDBUpdate.);
         }
-        return false;
     }
 
 
