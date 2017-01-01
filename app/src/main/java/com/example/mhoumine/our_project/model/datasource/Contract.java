@@ -192,17 +192,17 @@ public final class Contract {
         };
 
         public static boolean isUserAccountUpdated(Cursor cur) {
-            cur.moveToFirst(); // move cursor to start
+            cur.moveToFirst();
             return cur.getInt( cur.getColumnIndex( CheckDBUpdate.USER_ACCOUNT_COL) ) > 0;
         }
 
         public static boolean isActivityUpdated(Cursor cur) {
-            cur.moveToFirst(); // move cursor to beggining
+            cur.moveToFirst();
             return cur.getInt( cur.getColumnIndex( CheckDBUpdate.ACTIVITY_COL ) ) > 0;
         }
 
         public static boolean isBusinessUpdated(Cursor cur) {
-            cur.moveToFirst(); // move cursor to start
+            cur.moveToFirst();
             return cur.getInt( cur.getColumnIndex( CheckDBUpdate.BUSINESS_COL ) ) > 0;
         }
     }

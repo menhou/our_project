@@ -82,6 +82,7 @@ public class listDsManager implements IDSManager {
             String linkUrl = (String) be.get("linkUrl");
 
             this.businessList.add(new business(id, name, country, city, phoneNumber, street, email, linkUrl));
+            isBusinessesUpdated = true;
         }
         catch (Exception e){
             return false;
@@ -119,6 +120,7 @@ public class listDsManager implements IDSManager {
 
 
             this.activitiesList.add(new activity(activityInfo, country, startDate, endDate, cost, description, id));
+            isActivitiesUpdated = true;
         }
         catch (Exception e){
             return false;
@@ -152,6 +154,7 @@ public class listDsManager implements IDSManager {
             }
 
             this.userAccountList.add(new userAccount(username, password));
+            isUsersUpdated = true;
         }
         catch (Exception e){
             return false;
@@ -159,10 +162,36 @@ public class listDsManager implements IDSManager {
         return true;
     }
 
+
     public Cursor checkChanges() {
-        if (isActivitiesUpdated){
-            MatrixCursor matrix = new MatrixCursor(Contract.CheckDBUpdate.);
+        MatrixCursor matrix = new MatrixCursor(Contract.CheckDBUpdate.COLS);
+        ArrayList<Integer> resultList = new ArrayList<>();
+        if (isUsersUpdated){
+            isUsersUpdated = false;
+            resultList.add(1);
         }
+        else{
+            resultList.add(0);
+        }
+
+        if(isBusinessesUpdated){
+            isBusinessesUpdated = false;
+            resultList.add(1);
+        }
+        else{
+            resultList.add(0);
+        }
+
+        if (isActivitiesUpdated){
+            isActivitiesUpdated = false;
+            resultList.add(1);
+        }
+        else{
+            resultList.add(0);
+        }
+
+        matrix.addRow(resultList);
+        return matrix;
     }
 
 

@@ -30,6 +30,10 @@
 
         </activity>
 
+        <service android:name=".model.Service.CheckerService"
+            android:enabled="true"
+            android:exported="true"></service>
+
         <provider
             android:name="com.example.mhoumine.our_project.model.datasource.contentProvide"
             android:authorities="com.example.mhoumine.our_project.contentProvide"

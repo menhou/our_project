@@ -20,9 +20,10 @@ public class contentProvide extends ContentProvider {
     private static IDSManager manager = ManagerFactory.getInstance();
     //sets the uris
     static {
-        sUriMatcher.addURI(Contract.AUTHORITY, Contract.ACTIVITY, 1); //need to make some compatibles
-        sUriMatcher.addURI(Contract.AUTHORITY, Contract.BUSINESS, 2);    //need to make some compatibles
-        sUriMatcher.addURI(Contract.AUTHORITY, Contract.USER_ACCOUNT, 3);    //need to make some compatibles
+        sUriMatcher.addURI(Contract.AUTHORITY, Contract.ACTIVITY, 1);
+        sUriMatcher.addURI(Contract.AUTHORITY, Contract.BUSINESS, 2);
+        sUriMatcher.addURI(Contract.AUTHORITY, Contract.USER_ACCOUNT, 3);
+        sUriMatcher.addURI(Contract.AUTHORITY, Contract.CHECK_UPDATES, 4);
     }
     @Override
     public boolean onCreate() {
@@ -39,6 +40,8 @@ public class contentProvide extends ContentProvider {
                     return manager.getBusinessList();
                 case 3:
                     return manager.getUserList();
+                case 4:
+                    return manager.checkChanges();
                 default:
                     throw new IllegalArgumentException("Unrecognized Query-Table");
             }
