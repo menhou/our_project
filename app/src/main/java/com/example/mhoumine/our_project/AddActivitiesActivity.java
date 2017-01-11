@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.media.tv.TvContentRating;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -24,6 +25,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import com.example.mhoumine.our_project.model.datasource.Contract;
 import com.example.mhoumine.our_project.model.entities.activity;
 import com.example.mhoumine.our_project.model.entities.activityType;
+import com.example.mhoumine.our_project.model.entities.business;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -40,9 +42,11 @@ public class AddActivitiesActivity extends AppCompatActivity implements OnItemSe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_activities);
-
+        spinnerAsyncTask sAsyncTask = new spinnerAsyncTask();
+        sAsyncTask.execute();
         setTitle("Add Activity");
         Spinner spinner = (Spinner) findViewById(R.id.typeActivitySpinner);
+        Spinner idSpinner = (Spinner) findViewById(R.id.idSpinner);
         final EditText editStart = (EditText) findViewById(R.id.StartDateEditText);
         final EditText editEnd = (EditText) findViewById(R.id.EndDateEditText);
         final Calendar cal = Calendar.getInstance();
@@ -56,6 +60,9 @@ public class AddActivitiesActivity extends AppCompatActivity implements OnItemSe
 
         spinner.setPrompt("Choose Activity Type");
         spinner.setOnItemSelectedListener(this);
+        idSpinner.setPrompt("Enter Business ID");
+        idSpinner.setOnItemSelectedListener(this);
+
         ArrayList<String> items = new ArrayList<String>();
         items.add(activityType.ENTERTAINMENT_SHOW.toString());
         items.add(activityType.FLIGHT.toString());
@@ -65,6 +72,8 @@ public class AddActivitiesActivity extends AppCompatActivity implements OnItemSe
                 android.R.layout.simple_spinner_item, items);
         dataAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
+
+
 
         editStart.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -205,6 +214,27 @@ public class AddActivitiesActivity extends AppCompatActivity implements OnItemSe
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
+        }
+    }
+
+    private class spinnerAsyncTask extends AsyncTask<Void,Void,ArrayList<String>>{
+        @Override
+        protected ArrayList<String> doInBackground(Void... params) {
+            Cursor c = getContentResolver().query(Contract.BusinessAdjust.CONTENT_URI, null,null,null,null);
+            ArrayList<business> list = Contract.BusinessAdjust.cursorToList(c);
+            ArrayList<String> listID = new ArrayList<>();
+            for (business b: list){
+                listID.add(b.getId());
+            }
+            return listID;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<String> strings) {
+            Spinner s = (Spinner) findViewById(R.id.idSpinner);
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item, strings);
+            dataAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+            s.setAdapter(dataAdapter);
         }
     }
 }
