@@ -10,6 +10,9 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -22,9 +25,22 @@ public class PHPTools {
         StringBuilder postData = new StringBuilder();
         for (String param : params.keySet()){
             if(postData.length() != 0) postData.append('&');
-            postData.append(URLEncoder.encode(param, "UTF-8"));
-            postData.append("=");
-            postData.append(URLEncoder.encode(String.valueOf(params.get(param)), "UTF-8"));
+            if(param == "startDate" || param == "endDate"){
+                postData.append(URLEncoder.encode(param, "UTF-8"));
+                postData.append("=");
+                String s1 = String.valueOf(params.get(param));
+                long l = Long.parseLong(s1);
+                GregorianCalendar cal= new GregorianCalendar();
+                cal.setTimeInMillis(l);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                String s = sdf.format(cal.getTime());
+                postData.append(URLEncoder.encode(s, "UTF-8"));
+            }
+            else {
+                postData.append(URLEncoder.encode(param, "UTF-8"));
+                postData.append("=");
+                postData.append(URLEncoder.encode(String.valueOf(params.get(param)), "UTF-8"));
+            }
         }
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -58,7 +74,7 @@ public class PHPTools {
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("GET");
-        if (con.getResponseCode() == HttpURLConnection.HTTP_OK) { // success
+        if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
             BufferedReader in = new BufferedReader(new InputStreamReader(
                     con.getInputStream()));
             String inputLine;

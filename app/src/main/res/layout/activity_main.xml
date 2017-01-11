@@ -14,18 +14,18 @@
         android:text="Add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/something"
+        android:id="@+id/Add"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="13dp" />
 
     <Button
-        android:text="Load"
+        android:text="Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/something2"
-        android:layout_below="@+id/something"
-        android:layout_alignLeft="@+id/something"
-        android:layout_alignStart="@+id/something"
-        android:layout_marginTop="14dp" />
+        android:layout_below="@+id/Add"
+        android:layout_alignLeft="@+id/Add"
+        android:layout_alignStart="@+id/Add"
+        android:layout_marginTop="19dp"
+        android:id="@+id/loadButton" />
 
 </RelativeLayout>

@@ -1,5 +1,7 @@
 package com.example.mhoumine.our_project.model.entities;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.GregorianCalendar;
 /**
  * Created by mhoumine on 27/11/2016.
@@ -8,7 +10,9 @@ import java.util.GregorianCalendar;
 public class activity {
     private activityType activityInfo;
     private String country;
+    @SerializedName("start_date")
     private GregorianCalendar startDate;
+    @SerializedName("end_date")
     private GregorianCalendar endDate;
     private double cost;
     private String description;

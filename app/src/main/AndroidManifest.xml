@@ -14,13 +14,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
-
-        </activity>
-        <activity android:name=".LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".LoginActivity" >
+
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".OptionsActivity" >
@@ -41,5 +41,5 @@
             android:exported="true">
         </provider>
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
